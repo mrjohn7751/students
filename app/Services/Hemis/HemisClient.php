@@ -10,7 +10,7 @@ use RuntimeException;
 
 /**
  * HEMIS REST API (rest/v1/data/*) uchun yengil client.
- * Faqat o'qish (GET) operatsiyalari — UniRegistry HEMIS yozuvlarini o'zgartirmaydi.
+ * Faqat o'qish (GET) operatsiyalari — JDPU Kontingent HEMIS yozuvlarini o'zgartirmaydi.
  */
 class HemisClient
 {

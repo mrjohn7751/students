@@ -22,7 +22,7 @@ class UserCreate extends Command
         {--role=staff : admin | staff | viewer}
         {--generate-password : Kuchli parolni avtomatik yaratish va bir marta ko\'rsatish}';
 
-    protected $description = 'UniRegistry\'ga yangi foydalanuvchi qo\'shish';
+    protected $description = 'JDPU Kontingent\'ga yangi foydalanuvchi qo\'shish';
 
     public function handle(): int
     {

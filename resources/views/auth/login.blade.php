@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
-    <title>UniRegistry — Kirish</title>
+    <title>JDPU Kontingent — Kirish</title>
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+    <link rel="apple-touch-icon" href="{{ asset('images/favicon.png') }}">
     <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
         try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
     </script>
@@ -13,9 +16,9 @@
 <body class="font-sans antialiased min-h-screen grid place-items-center px-4 py-10">
 <main class="w-full max-w-[400px]">
     <div class="flex items-center gap-3 mb-6 justify-center">
-        <div class="size-12 rounded-2xl grid place-items-center font-extrabold text-white" style="background: linear-gradient(135deg, #1c5cab, #2a78d6)">UR</div>
+        <img src="{{ asset('images/jdpu.png') }}" alt="JDPU" class="size-14 shrink-0 rounded-full bg-white p-px" width="56" height="56">
         <div>
-            <div class="text-xl font-extrabold tracking-tight">UniRegistry</div>
+            <div class="text-xl font-extrabold tracking-tight">JDPU Kontingent</div>
             <p class="text-xs muted">Jizzax davlat pedagogika universiteti</p>
         </div>
     </div>

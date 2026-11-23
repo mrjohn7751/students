@@ -5,7 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UniRegistry — {{ $title }}</title>
+    <title>JDPU Kontingent — {{ $title }}</title>
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+    <link rel="apple-touch-icon" href="{{ asset('images/favicon.png') }}">
     <script nonce="{{ \Illuminate\Support\Facades\Vite::cspNonce() }}">
         try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
     </script>
@@ -15,9 +18,9 @@
 <div class="max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <header class="flex flex-wrap items-center justify-between gap-4 mb-6">
         <a href="{{ auth()->check() ? route('dashboard') : route('login') }}" class="flex items-center gap-3">
-            <div class="size-11 rounded-2xl grid place-items-center font-extrabold text-white" style="background: linear-gradient(135deg, #1c5cab, #2a78d6)">UR</div>
+            <img src="{{ asset('images/jdpu.png') }}" alt="JDPU" class="size-11 shrink-0 rounded-full bg-white p-px" width="44" height="44">
             <div>
-                <div class="text-xl font-extrabold tracking-tight">UniRegistry</div>
+                <div class="text-xl font-extrabold tracking-tight">JDPU Kontingent</div>
                 <p class="text-xs muted">Talabalar yagona tarixiy reyestri · Jizzax davlat pedagogika universiteti</p>
             </div>
         </a>
@@ -46,7 +49,7 @@
 
     {{ $slot }}
 
-    <footer class="text-xs muted text-center mt-10">UniRegistry · Ma’lumotlar bazasi va xizmat ko‘rsatish bo‘limi</footer>
+    <footer class="text-xs muted text-center mt-10">JDPU Kontingent · Ma’lumotlar bazasi va xizmat ko‘rsatish bo‘limi</footer>
 </div>
 </body>
 </html>

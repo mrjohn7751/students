@@ -20,7 +20,7 @@ class UserManage extends Command
         {email? : Foydalanuvchi emaili}
         {--role= : role amali uchun: admin | staff | viewer}';
 
-    protected $description = 'UniRegistry foydalanuvchilarini boshqarish';
+    protected $description = 'JDPU Kontingent foydalanuvchilarini boshqarish';
 
     public function handle(): int
     {

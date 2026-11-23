@@ -95,7 +95,7 @@ class QualityController extends Controller
                 fputcsv($out, $values, ';');
             }
             fclose($out);
-        }, "uniregistry-{$check}-".now()->format('Y-m-d').'.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
+        }, "jdpu-kontingent-{$check}-".now()->format('Y-m-d').'.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 
     /**
