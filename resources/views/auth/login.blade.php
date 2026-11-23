@@ -37,9 +37,9 @@
         <form method="POST" action="{{ route('login.store') }}" class="mt-5 flex flex-col gap-4" autocomplete="on">
             @csrf
             <label class="flex flex-col gap-1.5 text-sm font-semibold">
-                Email
-                <input type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
-                       maxlength="255" class="field !bg-none !pr-3 font-normal">
+                Login
+                <input type="text" name="username" value="{{ old('username') }}" required autofocus autocomplete="username"
+                       autocapitalize="none" spellcheck="false" maxlength="50" class="field !bg-none !pr-3 font-normal">
             </label>
             <label class="flex flex-col gap-1.5 text-sm font-semibold">
                 Parol

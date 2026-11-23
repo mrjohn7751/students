@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('view-personal-data', fn (User $user) => $user->is_active && $user->role->canViewPersonalData());
+        Gate::define('manage-users', fn (User $user) => $user->is_active && $user->role === UserRole::Admin);
         Gate::define('export-data', fn (User $user) => $user->is_active && $user->role->canExport());
 
         // Shaxsiy ma'lumotlarni skript bilan ommaviy yig'ib olishdan himoya

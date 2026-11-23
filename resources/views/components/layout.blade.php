@@ -24,27 +24,48 @@
                 <p class="text-xs muted">Talabalar yagona tarixiy reyestri · Jizzax davlat pedagogika universiteti</p>
             </div>
         </a>
-        <div class="flex items-center gap-2">
+        <nav class="flex flex-wrap items-center gap-2" aria-label="Asosiy menyu">
             {{ $actions ?? '' }}
             @auth
                 @can('view-personal-data')
                     @unless (request()->routeIs('students.*'))
-                        <a href="{{ route('students.index') }}" class="chip hover:opacity-80">Talabalar</a>
+                        <a href="{{ route('students.index') }}" class="nav-btn">Talabalar</a>
                     @endunless
                 @endcan
             @endauth
-            <button type="button" id="theme-toggle" class="btn-ghost card !rounded-xl px-3 py-2" aria-label="Mavzuni almashtirish">◐ Mavzu</button>
+            <button type="button" id="theme-toggle" class="nav-btn" aria-label="Mavzuni almashtirish">◐ Mavzu</button>
             @auth
-                <span class="hidden sm:inline-flex flex-col items-end leading-tight text-xs pl-2">
-                    <span class="font-semibold">{{ auth()->user()->name }}</span>
-                    <span class="muted">{{ auth()->user()->role->label() }}</span>
-                </span>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn-ghost card !rounded-xl px-3 py-2">Chiqish</button>
-                </form>
+                @php
+                    $currentUser = auth()->user();
+                    $initials = collect(preg_split('/\s+/u', trim($currentUser->name)))->filter()->take(2)
+                        ->map(fn ($part) => mb_strtoupper(mb_substr($part, 0, 1)))->join('');
+                @endphp
+                <details class="relative" data-dropdown>
+                    <summary class="nav-btn !py-1.5 !pl-1.5 list-none cursor-pointer select-none" aria-label="Foydalanuvchi menyusi">
+                        <span class="size-8 rounded-full grid place-items-center text-xs font-extrabold text-white shrink-0" style="background: #1c5cab">{{ $initials ?: '?' }}</span>
+                        <span class="flex flex-col items-start leading-tight text-left">
+                            <span class="font-bold">{{ $currentUser->name }}</span>
+                            <span class="text-xs muted font-medium">{{ $currentUser->role->label() }}</span>
+                        </span>
+                        <svg class="dropdown-chevron size-4 ml-1 muted shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    </summary>
+                    <div class="card absolute right-0 mt-2 w-60 p-1.5 z-50 shadow-xl">
+                        <div class="px-3 py-2 text-xs muted">Login: <b class="secondary">{{ $currentUser->username }}</b></div>
+                        @can('manage-users')
+                            <a href="{{ route('admin.users.index') }}" class="menu-item">Foydalanuvchilar</a>
+                            <a href="{{ route('admin.users.edit', $currentUser) }}" class="menu-item">Parolni o‘zgartirish</a>
+                        @endcan
+                        <form method="POST" action="{{ route('logout') }}" class="border-t mt-1 pt-1" style="border-color: var(--border)">
+                            @csrf
+                            <button type="submit" class="menu-item w-full text-left" style="color: var(--critical)">Chiqish</button>
+                        </form>
+                    </div>
+                </details>
             @endauth
-        </div>
+        </nav>
     </header>
 
     {{ $slot }}

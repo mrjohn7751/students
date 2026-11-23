@@ -171,3 +171,33 @@ body {
 .drillable .apexcharts-pie-area,
 .drillable .apexcharts-marker,
 .drillable-line .apexcharts-svg { cursor: pointer; }
+
+/* Navbar tugmalari va foydalanuvchi menyusi */
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    transition: background-color 0.15s, border-color 0.15s;
+}
+.nav-btn:hover { background: var(--surface-2); border-color: var(--accent); }
+summary.nav-btn::-webkit-details-marker { display: none; }
+details[open] > summary.nav-btn { border-color: var(--accent); }
+
+.menu-item {
+    display: block;
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.menu-item:hover { background: var(--surface-2); }
+.dropdown-chevron { transition: transform 0.2s ease; }
+details[open] > summary .dropdown-chevron { transform: rotate(180deg); }

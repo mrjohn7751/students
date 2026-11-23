@@ -9,7 +9,7 @@
 
 <x-layout title="Talabalar">
     <x-slot:actions>
-        <a href="{{ route('dashboard') }}" class="chip hover:opacity-80">← Dashboard</a>
+        <a href="{{ route('dashboard') }}" class="nav-btn">← Dashboard</a>
     </x-slot:actions>
 
     <section class="card p-5 mb-4">

@@ -10,8 +10,9 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Validation\Rule;
 
-#[Fillable(['name', 'email', 'password', 'role', 'is_active', 'last_login_at'])]
+#[Fillable(['name', 'username', 'email', 'password', 'role', 'is_active', 'last_login_at'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -32,5 +33,15 @@ class User extends Authenticatable
             'is_active' => 'boolean',
             'last_login_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Login qoidalari: kichik lotin harflari, raqam, nuqta, chiziqcha va pastki chiziq.
+     *
+     * @return array<int, mixed>
+     */
+    public static function usernameRules(?int $ignoreUserId = null): array
+    {
+        return ['required', 'string', 'min:3', 'max:50', 'regex:/^[a-z0-9._-]+$/', Rule::unique('users', 'username')->ignore($ignoreUserId)];
     }
 }

@@ -17,7 +17,7 @@ class UserManage extends Command
 {
     protected $signature = 'user:manage
         {action : list | block | unblock | role | password}
-        {email? : Foydalanuvchi emaili}
+        {username? : Foydalanuvchi logini}
         {--role= : role amali uchun: admin | staff | viewer}';
 
     protected $description = 'JDPU Kontingent foydalanuvchilarini boshqarish';
@@ -26,14 +26,14 @@ class UserManage extends Command
     {
         $action = $this->argument('action');
         if ($action === 'list') {
-            $this->table(['ID', 'Email', 'F.I.Sh.', 'Rol', 'Faol', 'Oxirgi kirish'], User::query()->orderBy('id')->get()->map(fn (User $u) => [
-                $u->id, $u->email, $u->name, $u->role->label(), $u->is_active ? 'ha' : 'BLOKLANGAN', $u->last_login_at?->format('d.m.Y H:i') ?? '—',
+            $this->table(['ID', 'Login', 'F.I.Sh.', 'Rol', 'Faol', 'Oxirgi kirish'], User::query()->orderBy('id')->get()->map(fn (User $u) => [
+                $u->id, $u->username, $u->name, $u->role->label(), $u->is_active ? 'ha' : 'BLOKLANGAN', $u->last_login_at?->format('d.m.Y H:i') ?? '—',
             ]));
 
             return self::SUCCESS;
         }
 
-        $user = User::query()->where('email', Str::lower((string) $this->argument('email')))->first();
+        $user = User::query()->where('username', Str::lower((string) $this->argument('username')))->first();
         if (! $user) {
             $this->error('Foydalanuvchi topilmadi.');
 
@@ -71,8 +71,8 @@ class UserManage extends Command
                 return self::FAILURE;
         }
 
-        AuditLog::record('user.'.$action, $user->email, ['role' => $user->role->value, 'via' => 'cli']);
-        $this->info("Bajarildi: {$action} → {$user->email}");
+        AuditLog::record('user.'.$action, $user->username, ['role' => $user->role->value, 'via' => 'cli']);
+        $this->info("Bajarildi: {$action} → {$user->username}");
 
         return self::SUCCESS;
     }

@@ -19,7 +19,7 @@ class EnsureUserIsActive
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect()->route('login')->withErrors(['email' => 'Hisobingiz bloklangan. Administratorga murojaat qiling.']);
+            return redirect()->route('login')->withErrors(['username' => 'Hisobingiz bloklangan. Administratorga murojaat qiling.']);
         }
 
         return $next($request);

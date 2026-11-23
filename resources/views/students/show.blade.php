@@ -34,7 +34,7 @@
 
 <x-layout :title="$student->full_name">
     <x-slot:actions>
-        <a href="{{ url()->previous() !== url()->current() && str_contains(url()->previous(), '/talabalar') ? url()->previous() : route('students.index') }}" class="chip hover:opacity-80">← Talabalar</a>
+        <a href="{{ url()->previous() !== url()->current() && str_contains(url()->previous(), '/talabalar') ? url()->previous() : route('students.index') }}" class="nav-btn">← Talabalar</a>
     </x-slot:actions>
 
     {{-- Sarlavha --}}

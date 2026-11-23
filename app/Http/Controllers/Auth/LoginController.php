@@ -31,27 +31,27 @@ class LoginController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'username' => ['required', 'string', 'max:50'],
             'password' => ['required', 'string', 'max:255'],
         ]);
-        $email = Str::lower(trim($credentials['email']));
-        $throttleKey = 'login:'.$email.'|'.$request->ip();
+        $username = Str::lower(trim($credentials['username']));
+        $throttleKey = 'login:'.$username.'|'.$request->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, self::MAX_ATTEMPTS)) {
-            AuditLog::record('auth.lockout', $email);
+            AuditLog::record('auth.lockout', $username);
             $minutes = (int) ceil(RateLimiter::availableIn($throttleKey) / 60);
 
             throw ValidationException::withMessages([
-                'email' => "Juda ko‘p noto‘g‘ri urinish. {$minutes} daqiqadan keyin qayta urinib ko‘ring.",
+                'username' => "Juda ko‘p noto‘g‘ri urinish. {$minutes} daqiqadan keyin qayta urinib ko‘ring.",
             ]);
         }
 
-        if (! Auth::attempt(['email' => $email, 'password' => $credentials['password'], 'is_active' => true])) {
+        if (! Auth::attempt(['username' => $username, 'password' => $credentials['password'], 'is_active' => true])) {
             RateLimiter::hit($throttleKey, self::LOCKOUT_SECONDS);
-            AuditLog::record('auth.failed', $email, ['user_id' => User::query()->where('email', $email)->value('id')]);
+            AuditLog::record('auth.failed', $username, ['user_id' => User::query()->where('username', $username)->value('id')]);
 
             // Hisob mavjudligi yoki bloklanganini oshkor qilmaslik uchun bitta umumiy xabar
-            throw ValidationException::withMessages(['email' => 'Email yoki parol noto‘g‘ri.'])->redirectTo(route('login'));
+            throw ValidationException::withMessages(['username' => 'Login yoki parol noto‘g‘ri.'])->redirectTo(route('login'));
         }
 
         RateLimiter::clear($throttleKey);
@@ -59,14 +59,14 @@ class LoginController extends Controller
 
         $user = $request->user();
         $user->forceFill(['last_login_at' => now()])->save();
-        AuditLog::record('auth.login', $user->email);
+        AuditLog::record('auth.login', $user->username);
 
         return redirect()->intended(route('dashboard'));
     }
 
     public function destroy(Request $request): RedirectResponse
     {
-        AuditLog::record('auth.logout', $request->user()?->email);
+        AuditLog::record('auth.logout', $request->user()?->username);
 
         Auth::guard('web')->logout();
         $request->session()->invalidate();

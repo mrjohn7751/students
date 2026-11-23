@@ -410,6 +410,16 @@ document.addEventListener('click', (e) => {
     document.getElementById(`table-${id}`).classList.toggle('hidden', !showTable);
 });
 
+// Foydalanuvchi menyusi: tashqariga bosilganda yoki Esc bosilganda yopiladi
+document.addEventListener('click', (e) => {
+    document.querySelectorAll('details[data-dropdown][open]').forEach((d) => {
+        if (!d.contains(e.target)) d.removeAttribute('open');
+    });
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('details[data-dropdown][open]').forEach((d) => d.removeAttribute('open'));
+});
+
 document.getElementById('theme-toggle')?.addEventListener('click', () => {
     const next = isDark() ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;

@@ -55,7 +55,7 @@
 
 <x-layout :title="$definition['label']">
     <x-slot:actions>
-        <a href="{{ route('dashboard', $filters) }}" class="chip hover:opacity-80">← Dashboard</a>
+        <a href="{{ route('dashboard', $filters) }}" class="nav-btn">← Dashboard</a>
     </x-slot:actions>
 
     <div class="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-4 items-start">

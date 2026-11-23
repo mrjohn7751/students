@@ -35,9 +35,9 @@ class AuthSecurityTest extends TestCase
 
     public function test_user_can_log_in_and_out_and_both_are_audited(): void
     {
-        $user = User::factory()->create(['email' => 'xodim@jdpu.uz']);
+        $user = User::factory()->create(['username' => 'xodim']);
 
-        $this->post(route('login.store'), ['email' => 'XODIM@jdpu.uz', 'password' => 'password'])
+        $this->post(route('login.store'), ['username' => ' XODIM ', 'password' => 'password'])
             ->assertRedirect(route('dashboard'));
         $this->assertAuthenticatedAs($user);
         $this->assertNotNull($user->fresh()->last_login_at);
@@ -50,13 +50,13 @@ class AuthSecurityTest extends TestCase
 
     public function test_wrong_password_and_blocked_user_get_the_same_generic_error(): void
     {
-        User::factory()->create(['email' => 'faol@jdpu.uz']);
-        User::factory()->inactive()->create(['email' => 'blok@jdpu.uz']);
+        User::factory()->create(['username' => 'faol']);
+        User::factory()->inactive()->create(['username' => 'blok']);
 
-        foreach ([['faol@jdpu.uz', 'notogri'], ['blok@jdpu.uz', 'password'], ['yoq@jdpu.uz', 'password']] as [$email, $password]) {
-            $this->from(route('login'))->post(route('login.store'), ['email' => $email, 'password' => $password])
+        foreach ([['faol', 'notogri'], ['blok', 'password'], ['yoq', 'password']] as [$username, $password]) {
+            $this->from(route('login'))->post(route('login.store'), ['username' => $username, 'password' => $password])
                 ->assertRedirect(route('login'))
-                ->assertSessionHasErrors(['email' => 'Email yoki parol noto‘g‘ri.']);
+                ->assertSessionHasErrors(['username' => 'Login yoki parol noto‘g‘ri.']);
             $this->assertGuest();
         }
         $this->assertSame(3, AuditLog::query()->where('action', 'auth.failed')->count());
@@ -64,14 +64,14 @@ class AuthSecurityTest extends TestCase
 
     public function test_account_is_locked_after_five_failed_attempts(): void
     {
-        User::factory()->create(['email' => 'xodim@jdpu.uz']);
+        User::factory()->create(['username' => 'xodim']);
 
         for ($i = 0; $i < 5; $i++) {
-            $this->post(route('login.store'), ['email' => 'xodim@jdpu.uz', 'password' => 'xato']);
+            $this->post(route('login.store'), ['username' => 'xodim', 'password' => 'xato']);
         }
 
-        $this->post(route('login.store'), ['email' => 'xodim@jdpu.uz', 'password' => 'password'])
-            ->assertSessionHasErrors('email');
+        $this->post(route('login.store'), ['username' => 'xodim', 'password' => 'password'])
+            ->assertSessionHasErrors('username');
         $this->assertGuest();
         $this->assertTrue(AuditLog::query()->where('action', 'auth.lockout')->exists());
     }
@@ -139,14 +139,14 @@ class AuthSecurityTest extends TestCase
 
     public function test_user_create_command_rejects_weak_passwords(): void
     {
-        $this->artisan('user:create', ['email' => 'admin@jdpu.uz', '--name' => 'Admin', '--role' => 'admin'])
+        $this->artisan('user:create', ['username' => 'admin', '--name' => 'Admin', '--role' => 'admin'])
             ->expectsQuestion('Parol (kamida 12 belgi, katta-kichik harf va raqam)', 'qisqa')
             ->expectsQuestion('Parolni takrorlang', 'qisqa')
             ->assertFailed();
-        $this->assertDatabaseMissing('users', ['email' => 'admin@jdpu.uz']);
+        $this->assertDatabaseMissing('users', ['username' => 'admin']);
 
-        $this->artisan('user:create', ['email' => 'admin@jdpu.uz', '--name' => 'Admin', '--role' => 'admin', '--generate-password' => true])
+        $this->artisan('user:create', ['username' => 'admin', '--name' => 'Admin', '--role' => 'admin', '--generate-password' => true])
             ->assertSuccessful();
-        $this->assertSame(UserRole::Admin, User::query()->where('email', 'admin@jdpu.uz')->first()->role);
+        $this->assertSame(UserRole::Admin, User::query()->where('username', 'admin')->first()->role);
     }
 }
