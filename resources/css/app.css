@@ -1,0 +1,173 @@
+@import 'tailwindcss';
+
+@source '../../storage/framework/views/*.php';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+    --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Ranglar rol bo'yicha — yorug' va qorong'i rejim alohida tanlangan */
+:root {
+    color-scheme: light;
+    --bg: #f4f3ef;
+    --surface-1: #fcfcfb;
+    --surface-2: #f0efec;
+    --border: #e4e2dc;
+    --grid: #ebe9e4;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #7a7974;
+    --accent: #1c5cab;
+    --accent-soft: #cde2fb;
+
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --series-3: #1baf7a;
+    --series-4: #eda100;
+    --series-5: #e87ba4;
+    --series-6: #008300;
+    --series-7: #6250d6;
+    --series-8: #e34948;
+    --series-other: #a9a8a2;
+
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme='light'])) {
+        color-scheme: dark;
+        --bg: #0b1220;
+        --surface-1: #121b2d;
+        --surface-2: #1a2540;
+        --border: #24314d;
+        --grid: #1e2a44;
+        --text-primary: #e6ecf5;
+        --text-secondary: #a9b6cc;
+        --text-muted: #76849c;
+        --accent: #5b9cf0;
+        --accent-soft: #17325c;
+        --series-1: #4a8ff0;
+        --series-2: #f07a45;
+        --series-3: #2fbf8a;
+        --series-4: #e5b23a;
+        --series-5: #e47aa4;
+        --series-6: #4cb84c;
+        --series-7: #9a8cf2;
+        --series-8: #ef6b6b;
+        --series-other: #5f6b80;
+        --good: #3ccf6e;
+        --warning: #f2bd3c;
+        --serious: #f0905f;
+        --critical: #ef5b5b;
+    }
+}
+
+:root[data-theme='dark'] {
+    color-scheme: dark;
+    --bg: #0b1220;
+    --surface-1: #121b2d;
+    --surface-2: #1a2540;
+    --border: #24314d;
+    --grid: #1e2a44;
+    --text-primary: #e6ecf5;
+    --text-secondary: #a9b6cc;
+    --text-muted: #76849c;
+    --accent: #5b9cf0;
+    --accent-soft: #17325c;
+    --series-1: #4a8ff0;
+    --series-2: #f07a45;
+    --series-3: #2fbf8a;
+    --series-4: #e5b23a;
+    --series-5: #e47aa4;
+    --series-6: #4cb84c;
+    --series-7: #9a8cf2;
+    --series-8: #ef6b6b;
+    --series-other: #5f6b80;
+    --good: #3ccf6e;
+    --warning: #f2bd3c;
+    --serious: #f0905f;
+    --critical: #ef5b5b;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-feature-settings: 'tnum' 1;
+}
+
+.card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.muted { color: var(--text-muted); }
+.secondary { color: var(--text-secondary); }
+
+.field {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 12px;
+    padding: 0.55rem 2.25rem 0.55rem 0.85rem;
+    font-size: 0.875rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7974' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+}
+.field:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--surface-2);
+    color: var(--text-secondary);
+}
+
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+
+.btn-ghost {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: 8px;
+    padding: 0.25rem 0.5rem;
+}
+.btn-ghost:hover { background: var(--surface-2); color: var(--text-primary); }
+
+.data-table { width: 100%; font-size: 0.8125rem; }
+.data-table th { text-align: left; font-weight: 600; color: var(--text-muted); padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border); }
+.data-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--grid); color: var(--text-secondary); }
+.data-table td.num, .data-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.apexcharts-tooltip.apexcharts-theme-light,
+.apexcharts-tooltip.apexcharts-theme-dark {
+    background: var(--surface-1) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.12) !important;
+    border-radius: 10px !important;
+}
+.apexcharts-tooltip-title {
+    background: var(--surface-2) !important;
+    border-bottom: 1px solid var(--border) !important;
+    font-weight: 700 !important;
+}
+.apexcharts-xaxistooltip { display: none; }
+
+/* Bosiladigan grafiklar: ustun/bo'lak/nuqta ustida qo'l kursori */
+.drillable .apexcharts-bar-area,
+.drillable .apexcharts-pie-area,
+.drillable .apexcharts-marker,
+.drillable-line .apexcharts-svg { cursor: pointer; }

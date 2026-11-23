@@ -1,0 +1,60 @@
+# ── Sirlar va muhit sozlamalari (faqat .env.example kiradi) ──
+.env
+.env.*
+!.env.example
+*.bak
+*.bak-*
+/auth.json
+/storage/*.key
+
+# ── Shaxsiy ma'lumotli fayllar: bazalar, eksportlar, dumplar ──
+*.xlsx
+*.xls
+*.csv
+*.sql
+*.sql.gz
+*.dump
+*.sqlite
+*.sqlite-journal
+.playwright-mcp/
+
+# ── Bog'liqliklar va build natijalari ──
+/vendor
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/public/fonts-manifest.dev.json
+
+# ── Loglar, kesh va test artefaktlari ──
+*.log
+/storage/pail
+/.phpunit.cache
+.phpunit.result.cache
+/coverage
+
+# ── AI agent va MCP sozlamalari (kodga aloqasi yo'q) ──
+/.agents
+/.claude
+/.codex
+/.cursor/
+/.mcp.json
+/boost.json
+/AGENTS.md
+/CLAUDE.md
+
+# ── Muharrir va OT fayllari ──
+/.idea
+/.vscode
+/.zed
+/.nova
+/.fleet
+.phpactor.json
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+Homestead.json
+Homestead.yaml
+.DS_Store
+Thumbs.db
+*.swp
